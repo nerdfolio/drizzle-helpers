@@ -1,0 +1,28 @@
+{
+	"name": "@nerdfolio/drizzle-d1-helpers",
+	"version": "0.1.0",
+	"description": "Helpers to run drizzle & d1 in the local dev environment. Simplify access to local miniflare sqlite file and to remote d1 via http proxy",
+	"main": "dist/index.mjs",
+	"types": "dist/index.d.ts",
+	"keywords": [],
+	"author": "taivo",
+	"license": "ISC",
+	"type": "module",
+	"scripts": {
+		"build": "tsup"
+	},
+	"packageManager": "pnpm@10.10.0",
+	"dependencies": {
+		"cloudflare": "^4.3.0",
+		"drizzle-orm": "^0.43.1",
+		"wrangler": "^4.15.2"
+	},
+	"engines": {
+		"node": ">=22",
+		"pnpm": ">=10"
+	},
+	"devDependencies": {
+		"tsup": "^8.4.0",
+		"typescript": "catalog:"
+	}
+}
