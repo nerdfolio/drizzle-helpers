@@ -1,6 +1,6 @@
 import { drizzle as drizzleD1 } from "drizzle-orm/d1"
 import { getPlatformProxy } from "wrangler"
-import { drizzle as drizzleD1Proxy } from "./d1-proxy.js"
+import { drizzle as drizzleD1Proxy } from "@nerdfolio/drizzle-d1-proxy"
 
 export type BoundD1 = ReturnType<typeof drizzleD1>
 export type ProxyD1 = ReturnType<typeof drizzleD1Proxy>
@@ -14,9 +14,7 @@ export async function useLocalD1<Env>(bindingName: keyof Env, doWerk: (db: Bound
 	}
 
 	const db = drizzleD1(binding)
-
 	await doWerk(db)
-
 	await platform.dispose()
 }
 

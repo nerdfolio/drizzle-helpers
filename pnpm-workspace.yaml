@@ -1,8 +1,8 @@
 packages:
-  - packages/*
+   - packages/*
 
 catalog:
-  typescript: "^5.8.3"
-  cloudflare: "^4.3.0",
-  drizzle-orm: "^0.43.1",
-  wrangler: "^4.15.2"
+   typescript: "^5.8.3"
+   cloudflare: "^4.3.0"
+   drizzle-orm: "^0.43.1"
+   wrangler: "^4.15.2"

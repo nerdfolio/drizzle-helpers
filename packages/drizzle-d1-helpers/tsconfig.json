@@ -6,7 +6,6 @@
 		"allowSyntheticDefaultImports": true,
 		"resolveJsonModule": true,
 		"esModuleInterop": true,
-		"jsx": "preserve",
 		"allowJs": true,
 		"strict": true,
 		"declaration": true
