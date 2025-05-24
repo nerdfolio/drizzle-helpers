@@ -10,81 +10,88 @@ In production, it's easy to access D1 with Drizzle via Cloudflare bindings. Howe
 | drizzle-kit on local db      | parse wrangler config and locate the miniflare sqlite file           | migrate, studio               |
 | drizzle-kit on remote db     | parse wrangler config to get databaseId and format access credential | migrate, studio               |
 
-# Installation
+## Installation
 
-```
+```console
+
 pnpm add -D @nerdfolio/drizzle-d1-helpers
+
 ```
 
 # Usage
 
-## d1-proxy driver
-```typescript
+## Obtain a D1Helper for a particular D1 binding
 
+```typescript
+import { D1Helper } from "@nerdfolio/drizzle-d1-helpers";
+
+const helper = D1Helper.get("MY_D1_DB");
+
+// If you only have 1 D1 binding in your wrangler config, you don't
+// have to specify it's name.
+// If you have more than 1 binding, this code will throw
+
+const helper2 = D1Helper.get();
 ```
 
-
+## Get proxy credentials
 
 ```typescript
-withLocalD1("DB", async (db) => {
-   // do whatever you need with the db that is locally bound to "DB" in wrangler config
-});
+console.log(
+   D1Helper.get(MY_D1_BINDING).withCfCredentials(
+      process.env.CLOUDFLARE_ACCOUNT_ID,
+      process.env.CLOUDFLARE_D1_TOKEN
+   ).proxyCredentials
+);
+
+//
+// {accountId: "....", token: "....", databaseId: "..."}
+//
 ```
 
-## Remote d1 scripting
+## Get local sqlite file or credentials
 
 ```typescript
-const { CLOUDFLARE_ACCOUNT_ID: accountId, CLOUDFLARE_D1_TOKEN: apiToken } =
-   process.env;
-const d1Credentials = {
-   accountId: process.env.CLOUDFLARE_ACCOUNT_ID,
-   token: process.env.CLOUDFLARE_API_TOKEN,
-   databaseId: D1Config.load("MY_D1").databaseId,
-};
+console.log(D1Helper.get().sqliteLocalFileCredentials);
 
-withProxyD1(d1Credentials, async (db) => {
-   // do work on remote db
-});
+// {url: "file:.wrangler/state/v3/d1/miniflare-D1DatabaseObject/a8bef33e667eba6dbefcb5090b02c4719daf1851f75b3901eda4b71e462fa5d2.sqlite"}
+
+// If you use `wrangler dev` with the `--persist-to` dir, this info lives out side of
+// wrangler config, so you must let set it in D1Helper in order to calculate the local
+// file path correctly
+
+console.log(D1Helper.get().withPersistTo("my-wrangler-path")).sqliteLocalFile;
+
+// my-wrangler-path/d1/miniflare-D1DatabaseObject/a8bef33e667eba6dbefcb5090b02c4719daf1851f75b3901eda4b71e462fa5d2.sqlite
+//
 ```
 
-## D1 Credentials for drizzle-kit
-
-`D1Config.load(D1_BINDING_NAME)` will load the corresponding d1 binding from wrangler config. If there
-is only one D1 binding in the config, the argument can be left empty. This function returns a `D1Config` class instance.
-
-With it, `d1Config.sqliteLocalFile` will give you a filename that looks like this `.wrangler/state/v3/d1/miniflare-D1DatabaseObject/a9be733ec67eab6dbefcb5090b084c719daf1851f57b2901eda41a3e4683d794.sqlite`
-
-The hash is generated in this package using the same hashing mechanism mentioned by [cloudflare here](https://github.com/cloudflare/miniflare/releases/tag/v3.20230918.0).
-
-Similarly, `d1Config.databaseId` can be used to put together the remote credentials. You'll need to provide the accountId and apiToken yourself. Here is an example drizzle.config.ts
+## Acquite d1 and run an async function with it
 
 ```typescript
-export default defineConfig({
-   out: "./drizzle/migrations",
-   schema: "./drizzle/schema",
-   dialect: "sqlite",
-   ...getEnvConfig(),
+// Using D1Helper for proxy d1
+D1Helper.get()
+   .withCfCredentials(
+      process.env.CLOUDFLARE_ACCOUNT_ID,
+      process.env.CLOUDFLARE_D1_TOKEN
+   )
+   .useProxyD1(async (db) => {
+      // run some code with db
+   });
+
+// Using D1Helper for local sqlite d1
+D1Helper.get().useLocalD1(async (db) => {
+   // run some code with db
 });
 
-function getEnvConfig() {
-   if (process.env.NODE_ENV === "production") {
-      return {
-         driver: "d1-http",
-         dbCredentials: {
-            accountId: process.env.CLOUDFLARE_ACCOUNT_ID,
-            token: process.env.CLOUDFLARE_API_TOKEN,
-            databaseId: D1Config.load("MY_D1").databaseId,
-         },
-      };
-   }
+// There are also useProxyD1 and useLocalD1
+useProxyD1({ accoundId, token, databaseId }, async () => {
+   // do work
+});
 
-   // else dev/local
-   return {
-      dbCredentials: {
-         url: `file:${D1Config.load("MY_D1").sqliteLocalFile}`,
-      },
-   };
-}
+useLocalD1("MY_D1", async (db) => {
+   // do work
+});
 ```
 
 # Happy Coding!!
