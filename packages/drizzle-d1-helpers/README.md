@@ -59,7 +59,7 @@ console.log(D1Helper.get().sqliteLocalFileCredentials);
 // {url: "file:.wrangler/state/v3/d1/miniflare-D1DatabaseObject/a8bef33e667eba6dbefcb5090b02c4719daf1851f75b3901eda4b71e462fa5d2.sqlite"}
 
 // If you use `wrangler dev` with the `--persist-to` dir, this info lives out side of
-// wrangler config, so you must let set it in D1Helper in order to calculate the local
+// wrangler config, so you must set it in order for D1Helper to calculate the local
 // file path correctly
 
 console.log(D1Helper.get().withPersistTo("my-wrangler-path")).sqliteLocalFile;
@@ -68,7 +68,7 @@ console.log(D1Helper.get().withPersistTo("my-wrangler-path")).sqliteLocalFile;
 //
 ```
 
-## Acquite d1 and run an async function with it
+## Acquire d1 and run an async function with it
 
 ```typescript
 // Using D1Helper for proxy d1
@@ -96,4 +96,4 @@ useLocalD1("MY_D1", async (db) => {
 });
 ```
 
-# Happy Coding!!
+# Happy Coding!
