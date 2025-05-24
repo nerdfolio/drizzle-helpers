@@ -1,4 +1,6 @@
-# Why is this needed?
+## drizzle-d1-proxy
+
+## Why is this needed?
 
 Facilitate access to d1 via drizzle sqlite proxy. As of May 2025, drizzle-kit has a `d1-http` driver option but it's not exported, thus not useable in typical drizzle-orm scenarios.
 

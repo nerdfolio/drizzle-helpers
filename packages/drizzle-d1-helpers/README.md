@@ -1,4 +1,6 @@
-# Why is this needed?
+# drizzle-d1-helpers
+
+## Why is this needed?
 
 In production, it's easy to access D1 with Drizzle via Cloudflare bindings. However, during development, local scripting, or drizzle-kit, different mechanisms are needed to acquire access to the D1 database. This is illustrated in the table below
 
