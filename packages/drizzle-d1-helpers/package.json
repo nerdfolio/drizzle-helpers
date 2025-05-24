@@ -6,6 +6,9 @@
    "types": "dist/index.d.ts",
    "keywords": [],
    "repository": "https://github.com/nerdfolio/cloudflare-helpers.git",
+   "files": [
+      "dist"
+   ],
    "publishConfig": {
       "access": "public"
    },
