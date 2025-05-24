@@ -5,6 +5,10 @@
    "main": "dist/index.mjs",
    "types": "dist/index.d.ts",
    "keywords": [],
+   "repository": {
+      "type": "https",
+      "url": "https://github.com/nerdfolio/cloudflare-helpers.git"
+   },
    "author": "taivo",
    "license": "ISC",
    "type": "module",
