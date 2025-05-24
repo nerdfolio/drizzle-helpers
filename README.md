@@ -1,2 +1,1 @@
-# drizzle-helpers
-TS/JS libraries to address some niche uses cases of drizzle
+TS/JS libraries to address some niche uses cases of Cloudflare and Drizzle
