@@ -5,9 +5,9 @@
    "main": "dist/d1proxy.mjs",
    "types": "dist/d1proxy.d.ts",
    "keywords": [],
-   "repository": {
-      "type": "https",
-      "url": "https://github.com/nerdfolio/cloudflare-helpers.git"
+   "repository": "https://github.com/nerdfolio/cloudflare-helpers.git",
+   "publishConfig": {
+      "access": "public"
    },
    "author": "taivo",
    "license": "ISC",
