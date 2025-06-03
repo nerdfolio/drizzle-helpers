@@ -1,6 +1,6 @@
 {
    "name": "@nerdfolio/drizzle-d1-proxy",
-   "version": "0.1.2",
+   "version": "0.1.4",
    "description": "D1 proxy driver for drizzle-orm. Uses cloudflare SDK underneath. Need drizzle-orm and cloudflare as peerDependencies",
    "main": "dist/index.cjs",
    "module": "dist/index.mjs",
@@ -23,7 +23,7 @@
    "devDependencies": {
       "cloudflare": "catalog:",
       "drizzle-orm": "catalog:",
-      "tsup": "^8.4.0",
+      "tsup": "^8.5.0",
       "typescript": "catalog:"
    },
    "engines": {

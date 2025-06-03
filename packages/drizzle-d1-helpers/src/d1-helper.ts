@@ -8,10 +8,8 @@ export type { BoundD1, ProxyD1 } from "./use-helpers"
 
 
 export class D1Helper {
-	configDir = ""
-
 	#requestedBinding: string
-	#cfg?: ReturnType<typeof loadRawD1Config>["config"]
+	#cfg?: ReturnType<typeof loadRawD1Config>
 
 	#cfAccountId?: string
 	#cfToken?: string
@@ -29,9 +27,7 @@ export class D1Helper {
 
 	get #c() {
 		if (!this.#cfg) {
-			const { config, configDir } = loadRawD1Config(this.#requestedBinding)
-			this.configDir = configDir ?? ""
-			this.#cfg = config
+			this.#cfg = loadRawD1Config(this.#requestedBinding)
 		}
 		return this.#cfg
 	}
@@ -61,7 +57,7 @@ export class D1Helper {
 		// otherwise use default location relative to wrangler config file
 		// NOTE: https://developers.cloudflare.com/workers/wrangler/api/#getplatformproxy says
 		// wrangler adds a /v3 suffix to dir whereas getPlatformProxy uses persistTo directly
-		return this.#persistToDir ?? path.relative(".", path.join(this.configDir, ".wrangler/state/v3"))
+		return this.#persistToDir ?? path.relative(".", path.join(this.#c.wranglerConfigDir ?? "", ".wrangler/state/v3"))
 	}
 
 	get sqliteLocalFile() {
@@ -151,7 +147,7 @@ function loadRawD1Config(bindingName?: string) {
 		throw new Error(`Could not find wrangler config for D1 binding: [${bindingName}]`)
 	}
 
-	return { config, configDir: configPath ? path.dirname(configPath) : undefined }
+	return { ...config, wranglerConfigDir: configPath ? path.dirname(configPath) : undefined }
 }
 
 function durableObjectNamespaceIdFromName(uniqueKey: string, name: string) {
