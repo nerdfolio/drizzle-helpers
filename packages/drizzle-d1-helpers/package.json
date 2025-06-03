@@ -1,8 +1,9 @@
 {
    "name": "@nerdfolio/drizzle-d1-helpers",
-   "version": "0.1.1",
+   "version": "0.1.2",
    "description": "Helpers to run drizzle & d1 in the local dev environment. Simplify access to local miniflare sqlite file and to remote d1 via http proxy",
-   "main": "dist/index.mjs",
+   "main": "dist/index.cjs",
+   "module": "dist/index.mjs",
    "types": "dist/index.d.ts",
    "keywords": [],
    "repository": "https://github.com/nerdfolio/cloudflare-helpers.git",
