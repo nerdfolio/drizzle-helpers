@@ -1,6 +1,6 @@
 {
    "name": "@nerdfolio/drizzle-d1-helpers",
-   "version": "0.1.2",
+   "version": "0.1.3",
    "description": "Helpers to run drizzle & d1 in the local dev environment. Simplify access to local miniflare sqlite file and to remote d1 via http proxy",
    "main": "dist/index.cjs",
    "module": "dist/index.mjs",
