@@ -6,28 +6,30 @@ import { useLocalD1, useProxyD1 } from "./use-helpers"
 
 export type { BoundD1, ProxyD1 } from "./use-helpers"
 
-
+type D1HelperOpts = {environment?: string}
 export class D1Helper {
 	#requestedBinding: string
 	#cfg?: ReturnType<typeof loadRawD1Config>
+	#environment?: string
 
 	#cfAccountId?: string
 	#cfToken?: string
 	#persistToDir?: string // accomodate getPlatformProxy's persistTo  or wrangler cli's --persist-to
 
-	private constructor(binding = "") {
+	private constructor(binding = "", opts?: D1HelperOpts) {
 		// save binding name for lazy config loading later
 		// because not all usecases require explicit config file loading
 		this.#requestedBinding = binding
+		this.#environment = opts?.environment;
 	}
 
-	static get(bindingName?: string) {
-		return new D1Helper(bindingName)
+	static get(bindingName?: string, opts?: D1HelperOpts) {
+		return new D1Helper(bindingName, opts)
 	}
 
 	get #c() {
 		if (!this.#cfg) {
-			this.#cfg = loadRawD1Config(this.#requestedBinding)
+			this.#cfg = loadRawD1Config(this.#requestedBinding, this.#environment)
 		}
 		return this.#cfg
 	}
@@ -130,8 +132,8 @@ export class D1Helper {
 }
 
 
-function loadRawD1Config(bindingName?: string) {
-	const fullCfg = unstable_readConfig({})
+function loadRawD1Config(bindingName?: string, environment?: string) {
+	const fullCfg = unstable_readConfig({env: environment})
 	const { d1_databases, configPath } = fullCfg
 
 	if (!bindingName && d1_databases.length > 1) {
