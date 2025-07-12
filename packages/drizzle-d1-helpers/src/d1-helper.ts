@@ -122,7 +122,7 @@ export class D1Helper {
 	}
 
 	async useLocalD1<Env>(doWerk: Parameters<typeof useLocalD1>[1]) {
-		return useLocalD1(this.binding as keyof Env, doWerk)
+		return useLocalD1(this.binding as keyof Env, doWerk, this.#environment)
 	}
 
 	async useProxyD1(doWerk: Parameters<typeof useProxyD1>[1]
