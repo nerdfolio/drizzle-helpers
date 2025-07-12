@@ -100,7 +100,7 @@ useLocalD1("MY_D1", async (db) => {
    // do work
 });
 
-useLocalD1("MY_D1", async (db) => {}, {environment: "staging"});
+useLocalD1("MY_D1", async (db) => {}, "staging");
 ```
 
 # Happy Coding!
