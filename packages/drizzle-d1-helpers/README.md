@@ -38,7 +38,7 @@ const helper2 = D1Helper.get();
 
 // If you have bindings defined for a specific worker environment
 
-const developmentEnvHelper = D1Helper.get("MY_D1_DB", {environment: "development"})
+const stagingEnvHelper = D1Helper.get("MY_D1_DB", {environment: "staging"})
 ```
 
 ## Get proxy credentials
@@ -99,6 +99,8 @@ useProxyD1({ accoundId, token, databaseId }, async () => {
 useLocalD1("MY_D1", async (db) => {
    // do work
 });
+
+useLocalD1("MY_D1", async (db) => {}, {environment: "staging"});
 ```
 
 # Happy Coding!
