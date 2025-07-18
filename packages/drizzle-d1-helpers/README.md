@@ -34,6 +34,11 @@ const helper = D1Helper.get("MY_D1_DB");
 // If you have more than 1 binding, this code will throw
 
 const helper2 = D1Helper.get();
+
+
+// If you have bindings defined for a specific worker environment
+
+const stagingEnvHelper = D1Helper.get("MY_D1_DB", {environment: "staging"})
 ```
 
 ## Get proxy credentials
@@ -94,6 +99,8 @@ useProxyD1({ accoundId, token, databaseId }, async () => {
 useLocalD1("MY_D1", async (db) => {
    // do work
 });
+
+useLocalD1("MY_D1", async (db) => {}, "staging");
 ```
 
 # Happy Coding!

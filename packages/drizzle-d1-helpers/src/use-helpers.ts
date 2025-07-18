@@ -5,8 +5,8 @@ import { drizzle as drizzleD1Proxy } from "@nerdfolio/drizzle-d1-proxy"
 export type BoundD1 = ReturnType<typeof drizzleD1>
 export type ProxyD1 = ReturnType<typeof drizzleD1Proxy>
 
-export async function useLocalD1<Env>(bindingName: keyof Env, doWerk: (db: BoundD1) => Promise<void>) {
-	const platform = await getPlatformProxy<Env>()
+export async function useLocalD1<Env>(bindingName: keyof Env, doWerk: (db: BoundD1) => Promise<void>, environment?: string) {
+	const platform = await getPlatformProxy<Env>({environment})
 
 	const binding = platform.env[bindingName]
 	if (!binding) {
